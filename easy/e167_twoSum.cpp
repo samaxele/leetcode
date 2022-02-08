@@ -35,25 +35,30 @@ other restrictions remain the same, while time given is shorter than former
 //     }
 // };
 
-//trial 2, ms(%) / mb (%)
+//trial 2, 9ms(20.03%) / 9.7mb (44.61%)
 class Solution {
 public:
     std::vector<int> twoSum(std::vector<int>& numbers, int target) {
-        std::map<std::vector<int>::iterator, int> mp;
-
-        auto it = numbers.begin();
-               
-        while (it != numbers.end()) {
-            // learn how to lookup has map
-            if (== target-(*it)) {
-                int a = mp[it]+1;
-                int b = it - numbers.begin()+1;
-                return {a,b};
-            }
-            else {
-                mp[it] = it-numbers.begin();
-            }
-            it++;
+        /*
+        Map<index,content>
+        assume there is always one solution, then there should be no repeat
+        value.
+        If value occurence > 1, either both are answer or both are not.
+        This also applies to n=3, 4, 5 and so on...
+        */
+        std::map<int, int> mp;
+        for (int i=0; i<numbers.size(); i++) {
+            auto it = mp.find(target-numbers[i]);
+            /*
+            if another pair is found
+            */
+           if (it != mp.end()) {
+               return {it->second,i+1};
+           }
+           else {
+               //add in index and save position as value
+               mp[numbers[i]] = i+1;
+           }
         }
         return {1,2};
     }
@@ -61,13 +66,12 @@ public:
 
 int main () {
     Solution s1;
-    std::vector<int> testcase={1,2,3,4,5,5,6,12};
+    std::vector<int> testcase={1,2,5,6,12};
     int target = 11;
 
     printList(testcase);
     std::vector<int> ans = s1.twoSum(testcase,target);
-    std::cout << "hello world\n" ;
-
-    printList(ans);
+    std::cout << "target = " << target << "\n";
+    std::cout << "ans = {" << ans[0] << "," << ans[1] << "}\n";
     return 0;
 }

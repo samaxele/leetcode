@@ -1,11 +1,39 @@
 // my custom header
 #pragma once
 
+/*
+Basic IO
+*/
 #include <iostream>
+
+/*
+Containers library
+*/
 #include <vector>
-#include <string>
 #include <map>
 #include <unordered_map>
+
+/*
+General utilities library
+random() can call with time.h (init = srand(time(NULL))
+*/
+#include <string>
+#include <time.h>
+#include <ctime>
+#include <chrono>
+
+/*
+Numerics library
+*/
+#include <algorithm>
+#include <math.h>
+
+/*
+Threads support library
+*/
+#include <thread>
+#include <mutex>
+
 
 // using namespace std;     //not a good habit for using
 /**
@@ -49,16 +77,11 @@ ListNode *genListNode(std::vector<int> x) {
 }
 
 void printList (ListNode *l1) {
-    if (!l1) {  //if nullptr is received
-        std::cout << "is empty." << std::endl; 
+    while(l1) {
+        std::cout << l1->val << " > ";
+        l1 = l1->next;
     }
-    else {
-        while (l1) {
-            std::cout << l1->val << " > ";
-            l1 = l1->next;
-        }
-        std::cout << "end(null)" << std::endl;
-    }
+    std::cout << "\b\b  \n";
 }
 
 void printList (int &l1) {

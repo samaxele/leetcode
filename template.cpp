@@ -1,6 +1,6 @@
 #include "CustomHeader/myCustomHeader.h"
 
-//trial #, ?.?ms(??.??%) / ?.?mb(??.??%)
+//trial #, ms(%) / mb(%)
 class Solution {  
     public:
     void nameofQuestion() {
