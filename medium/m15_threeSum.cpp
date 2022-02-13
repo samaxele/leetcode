@@ -10,37 +10,42 @@ Explanation:
 class Solution {
 public:
     std::vector<std::vector<int>> threeSum(std::vector<int>& nums) {
+        if (nums.size() < 3) {return {};}
         std::vector<std::vector<int>> ans = {};
-        //sort the vector
         std::sort(nums.begin(),nums.end());
-        int vec_end = nums.size();
-        if (vec_end < 3) {
-            return {};
-        }
-        int anchor = 1;
-        int n_left = anchor-1;
-        int n_right = anchor+1;
+        
+        auto it = nums.begin();
 
-        while (anchor <= vec_end-2) {
-            while (n_left >= 0  && n_right < vec_end) {
-                if (-1*nums[anchor]==nums[n_left]+nums[n_right]) {
-                    ans.push_back({nums[n_left],nums[anchor],nums[n_right]});
-                    break;
+        while (it < nums.end()-2) {
+            if (*it > 0) {break;}
+            while (it > nums.begin() && *it == *(it+1)) {it++;}
+            auto it_low = it+1;
+            auto it_high = nums.end()-1;
+            while (it_low < it_high) {
+                int sum = *it + *it_low + *it_high;
+                if (sum < 0) {it_low++;}
+                else if (sum > 0) {it_high--;}
+                else {
+                    /*
+                    The duplicate may ovvurs in situation like these
+                    {-7,-4,-2,-1,0,0,1,3,3,4,5,8}}
+                    if 3(n=7) was part of solution, then 3(n=8) should not be considered
+                    */
+                    int prev_low = *it_low, prev_high = *it_high;
+                    ans.push_back({*it,*it_low,*it_high});
+                    /*
+                    once push back, continue moving both pointers until 
+                    either they met each other or no longer duplicates found
+                    */
+                    while (it_low < it_high) {
+                        if (*it_low == prev_low) {it_low++;}
+                        else if (*it_high == prev_high) {it_high--;}
+                        else {break;}
+                    }
                 }
-                else if (-1*nums[anchor]>nums[n_left]+nums[n_right] && n_right<vec_end) {
-                    n_right++;
-                }
-                else if (-1*nums[anchor]<nums[n_left]+nums[n_right] && n_left>0) {
-                    n_left--;
-                }
-                // if both iterations has no solution
-                else {break;}
             }
-            anchor++;
-            n_left = anchor-1;
-            n_right = anchor+1;
+            it++;
         }
-        // for every possible combination / true answer, we push_back to partial_ans
         return ans;
     }
 };
@@ -53,7 +58,7 @@ int main () {
 
     std::vector<std::vector<int>> ans;
     Solution s1;
-    std::vector<int> testcase={0,0,0,0};
+    std::vector<int> testcase={0,1,0,-1};
     ans = s1.threeSum(testcase);
     std::cout << "hello world\n";
     for (auto x : ans) {
