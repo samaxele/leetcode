@@ -15,10 +15,39 @@ when (value) fast == slow, we know a close loop occurs
 */
 
 //trial 1, 4ms(43.11%) / 6.3mb(25.27%)
+// class Solution {
+// public:
+//     bool isHappy(int n) {
+//         std::map<int,int> mp = {};
+//         auto nextValue = [&](int x) {
+//             //enter 81, return 8x8 + 1x1 = 64
+//             int ans = 0;
+//             while (x >= 1) {
+//                 ans += (x%10)*(x%10);
+//                 x /= 10;
+//             }
+//             return ans;
+//         };
+        
+//         int ans = nextValue(n);
+//         while (ans > 1) {
+//             if (mp[ans] > 1) {return false;}
+//             mp[ans]++; 
+//             ans = nextValue(ans);
+//         }
+//         return true;
+//     }
+// };
+
+//trial 2, 0ms(100%) / 5.9mb(64.0%)
 class Solution {
 public:
     bool isHappy(int n) {
         std::map<int,int> mp = {};
+
+        /*
+        This lambda will return the next node value
+        */
         auto nextValue = [&](int x) {
             //enter 81, return 8x8 + 1x1 = 64
             int ans = 0;
@@ -29,11 +58,14 @@ public:
             return ans;
         };
         
-        int ans = nextValue(n);
-        while (ans > 1) {
-            if (mp[ans] > 1) {return false;}
-            mp[ans]++; 
-            ans = nextValue(ans);
+        int fast = n;
+        int slow = n;
+        while (slow > 1) {
+            fast = nextValue(nextValue(fast));
+            slow = nextValue(slow);
+            if (fast == slow && fast != 1) {
+                return false;
+            }
         }
         return true;
     }
@@ -41,7 +73,9 @@ public:
 
 int main () {
     Solution s1;
-    int x = 19;
+    int x;
+    std::cout << "enter number: ";
+    std::cin >> x;
     if (s1.isHappy(x)) {
         std::cout << "is true\n";
     }
