@@ -76,6 +76,23 @@ ListNode *genListNode(std::vector<int> x) {
     return head->next;
 }
 
+// ListNode *cycleNode(std::vector<int> x, int y) {
+//     //y = index of link list at 1-index
+//     if (y >= x.size()) {
+//         return {};
+//     }
+//     ListNode *head, *tail, *target=nullptr;
+//     tail = new ListNode(0);
+//     head = tail;
+//     for (int i=0; i<x.size(); i++) {
+//         tail->next = new ListNode (x[i]);
+//         tail = tail->next;
+//         if (i == y-1) {target = tail;}
+//     }
+//     tail->next = target;
+//     return head->next;
+// }
+
 void printList (ListNode *l1) {
     while(l1) {
         std::cout << l1->val << " > ";
