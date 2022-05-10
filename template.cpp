@@ -1,4 +1,4 @@
-#include "CustomHeader/myCustomHeader.h"
+#include "../CustomHeader/CustomHeader.h"
 
 //trial #, ms(%) / mb(%)
 class Solution {  
@@ -6,6 +6,16 @@ class Solution {
     void nameofQuestion() {
 
     }
+    
+    //you may remove this constructor / destructor
+    Solution() {
+        std::cout << "Soluiton created\n";
+    }
+
+    ~Solution() {
+        std::cout << "Soluiton destroyed\n";
+    }
+
 };
 
 int main () {

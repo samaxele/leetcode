@@ -96,3 +96,31 @@ void printList (std::vector<int> &vec) {
     }
     std::cout << "null" << std::endl;
 } 
+
+void show_matrix(std::vector<std::vector<int>>& sample) {
+    auto it_x = sample.begin();
+
+    while (it_x != sample.end()) {
+        auto it_y = it_x->begin();
+        while (it_y != it_x->end()) {
+            std::cout << *it_y << " ";
+            ++it_y;
+        }
+        std::cout << "\n";
+        ++it_x;
+    }
+}
+
+std::vector<std::vector<int>> generate_matrix(uint8_t m, uint8_t n, int range) {
+    //generate new random seed
+    srand(time(NULL));
+    std::vector<std::vector<int>> row;
+    std::vector<int> col;
+    for (int i=0; i<n; ++i) {
+        for (int j=0; j<m; ++j) {
+            col.push_back(rand()%range);
+        }
+        row.push_back(col);
+    }
+    return row;
+}
